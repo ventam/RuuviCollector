@@ -348,8 +348,14 @@ public abstract class Config {
     }
 
     public static DBConnection getDBConnection() {
-        if (dbConnection == null) {
+        while (dbConnection == null) {
+
+            try{
+                Thread.sleep(10000);
             dbConnection = createDBConnection();
+            }catch(Exception e){
+                LOG.error("DataBase connection error", e);//debug("Config: " + configFile);
+            }
         }
         return dbConnection;
     }
